@@ -1,0 +1,340 @@
+# IMS API Documentation for Postman
+
+**Base URL:** http://localhost:8090/api/v1
+
+---
+
+## 1. Authentication (AuthController)
+
+### Sign Up
+- **Method:** POST
+- **URL:** {{base_url}}/auth/signup
+- **Body (JSON):**
+```json
+{
+  "f_Name": "John",
+  "l_Name": "Doe",
+  "email": "john.doe@example.com",
+  "contactNo": "0771234567",
+  "role": "LAB_TO",
+  "gender": "MALE",
+  "state": true,
+  "password": "password123",
+  "departmentId": 1
+}
+```
+
+### Sign In
+- **Method:** POST
+- **URL:** {{base_url}}/auth/signin
+- **Body (JSON):**
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+```
+
+---
+
+## 2. Inventory Items (InventoryItemController)
+
+### Get All Items
+- **Method:** GET
+- **URL:** {{base_url}}/inventory/all
+
+### Get Items by Department
+- **Method:** GET
+- **URL:** {{base_url}}/inventory/department/{deptId}
+
+### Get My Department Inventory
+- **Method:** GET
+- **URL:** {{base_url}}/inventory/my-department
+
+### Get Items by Type
+- **Method:** GET
+- **URL:** {{base_url}}/inventory/type/{type} (type: CAPITAL | SIMPLE)
+
+### Get Low Stock Items
+- **Method:** GET
+- **URL:** {{base_url}}/inventory/low-stock
+
+### Add Item
+- **Method:** POST
+- **URL:** {{base_url}}/inventory/add
+- **Body (JSON):**
+```json
+{
+  "name": "Projector",
+  "type": "CAPITAL",
+  "categoryId": 1,
+  "departmentId": 1,
+  "specifications": "4K Ultra HD, Wireless",
+  "quantity": 5,
+  "threshold": 2,
+  "location": "Lab 01"
+}
+```
+
+### Update Item
+- **Method:** PUT
+- **URL:** {{base_url}}/inventory/update/{id}
+- **Body (JSON):**
+```json
+{
+  "name": "Projector Pro",
+  "type": "CAPITAL",
+  "categoryId": 1,
+  "departmentId": 1,
+  "specifications": "8K Ultra HD, Wireless",
+  "quantity": 5,
+  "threshold": 1,
+  "location": "Lab 02"
+}
+```
+
+### Stock In
+- **Method:** PUT
+- **URL:** {{base_url}}/inventory/stock-in/{id}
+- **Body (JSON):**
+```json
+{
+  "quantity": 10
+}
+```
+
+### Mark Disused
+- **Method:** PUT
+- **URL:** {{base_url}}/inventory/disuse/{id}
+
+---
+
+## 3. Inventory Requests (InventoryRequestController)
+
+### Submit Request
+- **Method:** POST
+- **URL:** {{base_url}}/request/submit
+- **Body (JSON):**
+```json
+{
+  "itemName": "Laptop",
+  "itemType": "CAPITAL",
+  "categoryId": 1,
+  "departmentId": 1,
+  "quantity": 2,
+  "purpose": "For student lab work",
+  "specifications": "i7, 16GB RAM, 512GB SSD"
+}
+```
+
+### Review Request (Lab In-Charge / MA)
+- **Method:** PUT
+- **URL:** {{base_url}}/request/review/{id}
+- **Body (JSON):**
+```json
+{
+  "technicalRemarks": "Specifications verified and approved for purchase.",
+  "purchaseDetails": ""
+}
+```
+
+### HOD Decision
+- **Method:** PUT
+- **URL:** {{base_url}}/request/hod-decision/{id}?approve=true
+
+### IMO Decision
+- **Method:** PUT
+- **URL:** {{base_url}}/request/imo-decision/{id}?approve=true
+
+### Record Purchase (MA)
+- **Method:** PUT
+- **URL:** {{base_url}}/request/purchase/{id}
+- **Body (JSON):**
+```json
+{
+  "technicalRemarks": "Purchased from ABC Suppliers",
+  "purchaseDetails": "Inv No: 12345, Date: 2024-03-13"
+}
+```
+
+### My Requests
+- **Method:** GET
+- **URL:** {{base_url}}/request/my
+
+### Get Requests by Status
+- **Method:** GET
+- **URL:** {{base_url}}/request/status/{status} (STATUS: PENDING | REVIEWED | HOD_APPROVED | IMO_APPROVED | PURCHASED | REJECTED)
+
+### Get All Requests
+- **Method:** GET
+- **URL:** {{base_url}}/request/all
+
+### Get Requests by Department
+- **Method:** GET
+- **URL:** {{base_url}}/request/department/{deptId}
+
+---
+
+## 4. Maintenance (MaintenanceController)
+
+### Request Maintenance
+- **Method:** POST
+- **URL:** {{base_url}}/maintenance/request/{itemId}
+- **Body (JSON):**
+```json
+{
+  "description": "Screen flickering issue"
+}
+```
+
+### Approve Maintenance
+- **Method:** PUT
+- **URL:** {{base_url}}/maintenance/approve/{id}
+
+### Reject Maintenance
+- **Method:** PUT
+- **URL:** {{base_url}}/maintenance/reject/{id}
+
+### Complete Maintenance
+- **Method:** PUT
+- **URL:** {{base_url}}/maintenance/complete/{id}
+- **Body (JSON):**
+```json
+{
+  "completionNotes": "Replaced the display panel",
+  "serviceProvider": "Tech Hub PVT Ltd",
+  "cost": 15000.0
+}
+```
+
+### Get Maintenance by Item
+- **Method:** GET
+- **URL:** {{base_url}}/maintenance/item/{itemId}
+
+### Get All Maintenance Records
+- **Method:** GET
+- **URL:** {{base_url}}/maintenance/all
+
+### Get Maintenance by Status
+- **Method:** GET
+- **URL:** {{base_url}}/maintenance/status/{status} (STATUS: PENDING | APPROVED | IN_SERVICE | COMPLETED | REJECTED)
+
+---
+
+## 5. User Management (UserController)
+
+### Get All Users
+- **Method:** GET
+- **URL:** {{base_url}}/user/all
+
+### Get Pending Users
+- **Method:** GET
+- **URL:** {{base_url}}/user/pending
+
+### Approve User
+- **Method:** PUT
+- **URL:** {{base_url}}/user/approve/{id}
+
+### Update User
+- **Method:** PUT
+- **URL:** {{base_url}}/user/update/{id}
+- **Body (JSON):**
+```json
+{
+  "f_Name": "Jane",
+  "l_Name": "Doe",
+  "email": "jane.doe@example.com",
+  "contactNo": "0779876543",
+  "role": "HOD",
+  "gender": "FEMALE",
+  "state": true,
+  "password": "newpassword123",
+  "departmentId": 1
+}
+```
+
+### Deactivate User
+- **Method:** PUT
+- **URL:** {{base_url}}/user/deactivate/{id}
+
+---
+
+## 6. Department Management (DepartmentController)
+
+### Get All Departments
+- **Method:** GET
+- **URL:** {{base_url}}/department/all
+
+### Save Department
+- **Method:** POST
+- **URL:** {{base_url}}/department/save
+- **Body (JSON):**
+```json
+{
+  "name": "Department of Computer Engineering",
+  "code": "DCE",
+  "status": true
+}
+```
+
+### Update Department
+- **Method:** PUT
+- **URL:** {{base_url}}/department/update/{id}
+- **Body (JSON):**
+```json
+{
+  "name": "Dept of Electrical Engineering",
+  "code": "DEE",
+  "status": true
+}
+```
+
+### Delete Department
+- **Method:** DELETE
+- **URL:** {{base_url}}/department/delete/{id}
+
+---
+
+## 7. Category Management (CategoryController)
+
+### Get All Categories
+- **Method:** GET
+- **URL:** {{base_url}}/category/all
+
+### Save Category
+- **Method:** POST
+- **URL:** {{base_url}}/category/save
+- **Body (JSON):**
+```json
+{
+  "categoryName": "Electronic Devices",
+  "categoryDesc": "All electronic hardware and sensors"
+}
+```
+
+### Update Category
+- **Method:** PUT
+- **URL:** {{base_url}}/category/update/{id}
+- **Body (JSON):**
+```json
+{
+  "categoryName": "Furniture",
+  "categoryDesc": "Chairs, Tables, and Desks"
+}
+```
+
+### Delete Category
+- **Method:** DELETE
+- **URL:** {{base_url}}/category/delete/{id}
+
+---
+
+## 8. Audit Logs (AuditLogController)
+
+### Get All Audit Logs
+- **Method:** GET
+- **URL:** {{base_url}}/audit/all
+
+### Get Audit Logs by User Email
+- **Method:** GET
+- **URL:** {{base_url}}/audit/user/{email}
